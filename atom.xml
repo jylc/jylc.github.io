@@ -8,8 +8,30 @@
     <author>
       <name>moicena</name>
     </author>
-    <updated>2024-04-22T14:03:55.581Z</updated>
+    <updated>2024-05-09T15:45:55.000Z</updated>
     <category term="数据库" />
+    <entry>
+        <id>http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/</id>
+        <title>如何在docker中重置mysql的root密码</title>
+        <link rel="alternate" href="http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/"/>
+        <content type="html">&lt;h1 id=&#34;遇到的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#遇到的问题&#34;&gt;#&lt;/a&gt; 遇到的问题&lt;/h1&gt;
+&lt;p&gt;长期未使用 mysql 导致忘记了 root 密码，多次尝试始终无法猜出设置的密码（晕），新建数据库又十分麻烦，故选择重置 root 密码。&lt;/p&gt;
+&lt;h1 id=&#34;解决方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解决方法&#34;&gt;#&lt;/a&gt; 解决方法&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;进入 mysql 容器中：docker exec -it &amp;lt;容器名&amp;gt; bash&lt;/li&gt;
+&lt;li&gt;查看 /etc/mysql/conf.d 下是否有 docker.cnf 文件，如果有则在文件末尾添加 skip-grant-tables（网上教程是如此，但本人未成功，没有 docker.cnf 这个文件，自己创建也不行）。如果修改 docker.cnf 不成功，可以尝试修改 /etc/my.cnf 文件，在其中添加 skip-grant-tables，注意不要添加在！includedir /etc/mysql/conf.d/ 后，会不成功的！&lt;/li&gt;
+&lt;li&gt;修改后重启该数据库容器，使配置生效：docker restart &amp;lt;容器名&amp;gt;&lt;/li&gt;
+&lt;li&gt;进入容器中，执行 mysql -hlocakhost -uroot -p，此时按回车即可，无需密码登录。&lt;/li&gt;
+&lt;li&gt;由于在使用 --skip-grant-tables 选项启动服务时禁用了帐户管理，因此必须重新加载授权。 执行 flush privileges 这样就可以更改密码了。&lt;/li&gt;
+&lt;li&gt;执行 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;new_passowrd&#39;; 即可更新密码。
+&lt;ul&gt;
+&lt;li&gt;有一点需要注意的是，在 5.7 版本以上，不再支持 (update user set password = password (&#39; 你的新密码 &#39;) where user = &#39;root&#39;;) 这种写法，换成如下这种写法 (update user set authentication_string=password (&#39;123&#39;) where user=&#39;root&#39;);&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <updated>2024-05-09T15:45:55.000Z</updated>
+    </entry>
     <entry>
         <id>http://example.com/2024/04/22/hello-world/</id>
         <title>Hello World</title>

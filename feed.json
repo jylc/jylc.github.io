@@ -7,6 +7,14 @@
     "home_page_url": "http://example.com",
     "items": [
         {
+            "id": "http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/",
+            "url": "http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/",
+            "title": "如何在docker中重置mysql的root密码",
+            "date_published": "2024-05-09T15:45:55.000Z",
+            "content_html": "<h1 id=\"遇到的问题\"><a class=\"anchor\" href=\"#遇到的问题\">#</a> 遇到的问题</h1>\n<p>长期未使用 mysql 导致忘记了 root 密码，多次尝试始终无法猜出设置的密码（晕），新建数据库又十分麻烦，故选择重置 root 密码。</p>\n<h1 id=\"解决方法\"><a class=\"anchor\" href=\"#解决方法\">#</a> 解决方法</h1>\n<ul>\n<li>进入 mysql 容器中：docker exec -it &lt;容器名&gt; bash</li>\n<li>查看 /etc/mysql/conf.d 下是否有 docker.cnf 文件，如果有则在文件末尾添加 skip-grant-tables（网上教程是如此，但本人未成功，没有 docker.cnf 这个文件，自己创建也不行）。如果修改 docker.cnf 不成功，可以尝试修改 /etc/my.cnf 文件，在其中添加 skip-grant-tables，注意不要添加在！includedir /etc/mysql/conf.d/ 后，会不成功的！</li>\n<li>修改后重启该数据库容器，使配置生效：docker restart &lt;容器名&gt;</li>\n<li>进入容器中，执行 mysql -hlocakhost -uroot -p，此时按回车即可，无需密码登录。</li>\n<li>由于在使用 --skip-grant-tables 选项启动服务时禁用了帐户管理，因此必须重新加载授权。 执行 flush privileges 这样就可以更改密码了。</li>\n<li>执行 ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_passowrd'; 即可更新密码。\n<ul>\n<li>有一点需要注意的是，在 5.7 版本以上，不再支持 (update user set password = password (' 你的新密码 ') where user = 'root';) 这种写法，换成如下这种写法 (update user set authentication_string=password ('123') where user='root');</li>\n</ul>\n</li>\n</ul>\n",
+            "tags": []
+        },
+        {
             "id": "http://example.com/2024/04/22/hello-world/",
             "url": "http://example.com/2024/04/22/hello-world/",
             "title": "Hello World",
