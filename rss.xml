@@ -10,9 +10,110 @@
         </author>
         <description>家里蹲，死肥宅</description>
         <language>zh-CN</language>
-        <pubDate>Wed, 17 Jul 2024 23:12:12 +0800</pubDate>
-        <lastBuildDate>Wed, 17 Jul 2024 23:12:12 +0800</lastBuildDate>
+        <pubDate>Wed, 24 Jul 2024 23:19:44 +0800</pubDate>
+        <lastBuildDate>Wed, 24 Jul 2024 23:19:44 +0800</lastBuildDate>
         <category term="数据库" />
+        <item>
+            <guid isPermalink="true">http://example.com/2024/07/24/%E6%9F%90API%E5%B7%A5%E5%85%B7%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0/</guid>
+            <title>某API工具的逆向分析学习</title>
+            <link>http://example.com/2024/07/24/%E6%9F%90API%E5%B7%A5%E5%85%B7%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0/</link>
+            <category term="逆向分析" scheme="http://example.com/tags/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" />
+            <pubDate>Wed, 24 Jul 2024 23:19:44 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;起因&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#起因&#34;&gt;#&lt;/a&gt; 起因&lt;/h1&gt;
+&lt;p&gt;开发后端时需要一个 API 工具对完成的 API 进行测试，手中有 POSTMAN 但此工具用起来不太友好，因此第一时间想到了 APIFOX。由于某些原因，需要在离线的情况下使用，而经过测试 APIFOX 必须登录后才能进入界面使用，显然这是一个不得不解决的问题。&lt;/p&gt;
+&lt;h1 id=&#34;观察应用的特点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#观察应用的特点&#34;&gt;#&lt;/a&gt; 观察应用的特点&lt;/h1&gt;
+&lt;p&gt;以前的桌面应用基本上都是二进制程序，可以通过如 Ollydbg 或者 IDA 等专门的工具进行逆向分析。经过初步的尝试，Ollydbg 提示这不是一个标准的二进制程序，因此暂时碰到了分析过程中的第一个问题。但根据界面的特点以及以往的经验可以判断出这大概是一个打包成桌面应用的前端程序，而且有可能前端框架还是 electron。于是根据这个线索在网上搜索对应的逆向分析方法，诶嘿还真找到了一个非常相似的教程&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuNTJwb2ppZS5jbi90aHJlYWQtMTc4NjgxMS0xLTEuaHRtbA==&#34;&gt; Xmind macOS &amp;amp; Windows (23.09.xxxxx) 通杀方案&lt;/span&gt; &lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn1&#34; id=&#34;fnref1&#34;&gt;[1]&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;解包&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解包&#34;&gt;#&lt;/a&gt; 解包&lt;/h1&gt;
+&lt;p&gt;前端的打包后的程序经过安装后其核心实现部分位于安装目录下 resources 文件夹的 app.asar 文件中，对于 app.asar 的分析需要在 node 中安装 asar 工具。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;步骤&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;全局安装 npm：npm 是随着 node 一同安装的，可以自行搜索 node 的安装教程；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;全局安装 asar：与 npm 安装其他依赖方法一致&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;npm install -g asar&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看 asar 是否安装成功：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;asar -V #如果出现版本号则说明安装成功；&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解压 asar：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;asar extract app.asar ./app #解压文件到 app 目录中，解压成功后可以看到其中有 dist/node_modules/package.json 三个文件或文件夹&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725000838.png&#34; alt=&#34;目录&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;分析解压出的文件：使用熟悉的工具打开 app 目录进行分析。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;分析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#分析&#34;&gt;#&lt;/a&gt; 分析&lt;/h1&gt;
+&lt;p&gt;分析的重点主要还是解压出的 dist 文件夹，其他两个只是依赖库目录与依赖库的版本信息文件。main 目录下的代码被 bytenode 加密过无法分析，因此选择从 renderer 入手。&lt;/p&gt;
+&lt;h2 id=&#34;字段特征起手&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#字段特征起手&#34;&gt;#&lt;/a&gt; 字段特征起手&lt;/h2&gt;
+&lt;p&gt;为方便搜索语言选为英文（界面的中文与日文在程序中被编码为了 unicode，搜索多了一步编码转换的过程），随意输入账号出现报错提示，根据该提示在代码中全局搜索，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725001557.png&#34; alt=&#34;登录报错&#34; /&gt;&lt;br /&gt;
+定位到提示出现的地方，目测，前面的字段是前端应用的组件属值，据此向下继续搜索，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725002805.png&#34; alt=&#34;报错提示定位&#34; /&gt;&lt;br /&gt;
+观察到，第一个出现的地方与其他地方有关明显的不同，位于运行代码之中。&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725003043.png&#34; alt=&#34;组件属性定位&#34; /&gt;&lt;br /&gt;
+编译过后的 js 代码阅读起来是很困难的，毕竟没有可辨析的名称。。。&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725003808.png&#34; alt=&#34;定位处代码&#34; /&gt;&lt;br /&gt;
+往前看看代码，可以发现有 onSuccess 和 onError 的字样，猜测与网络请求有关，于是可以进一步进行溯源。其实对编译后的 js 代码并不怎么了解，但看到框出来的部分联想到其可能是调用的方法，因此继续追踪，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725212623.png&#34; alt=&#34;出现的字段&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725213157.png&#34; alt=&#34;BqDR&#34; /&gt;&lt;br /&gt;
+ 再次定位，出现了 api 形式的部分，但 captchas 应该是与验证码相关，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725213257.png&#34; alt=&#34;S&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;动态调试&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#动态调试&#34;&gt;#&lt;/a&gt; 动态调试&lt;/h2&gt;
+&lt;p&gt;再追踪 t.a 线索就断了，因为在 t 对应的方法中找不到有 a 方法出现地方。这里简要说明下 e.d (a,b,function {})，该形式的方法初步猜测是 Object.defineProperty (obj, prop, descriptor)，该方法是 es5 的方法，作用是直接在一个对象上定义一个新属性或者修改一个对象的现有属性，并返回这个对象 &lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn2&#34; id=&#34;fnref2&#34;&gt;[2]&lt;/a&gt;&lt;/sup&gt;，所以 e.d 的第二个参数 b 是被外部调用的属性的名称，而 a 是目标对象，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725213938.png&#34; alt=&#34;t&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725214005.png&#34; alt=&#34;+Xce&#34; /&gt;&lt;br /&gt;
+ 在该方法中翻了翻找到了 login 的字眼，也许就是登录的 api，有点奇怪的是找不到前面 l.Zh.location.pathname 中 l 对应的方法定义位置。&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725214726.png&#34; alt=&#34;login字段&#34; /&gt;&lt;br /&gt;
+调用 login 这个 api 的方法上下都看了看发现并不是网络上的请求，得在别处看看。login 所在的 ae 方法或许可以看一下其调用，因为明显地 z 是返回的响应，而它又是从 de.response 处获得的值，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725220410.png&#34; alt=&#34;ae&#34; /&gt;&lt;br /&gt;
+ 但 ae 的调用并不是那么好找，因此转换一下思路，尝试调试一下应用找到调用的堆栈&lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn3&#34; id=&#34;fnref3&#34;&gt;[3]&lt;/a&gt;&lt;/sup&gt;&lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn4&#34; id=&#34;fnref4&#34;&gt;[4]&lt;/a&gt;&lt;/sup&gt;&lt;br /&gt;
+。再如图中所示的位置打个断点并运行应用，可以看到应用运行的一些信息了，确实没猜错 z 是返回的响应内容&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725222032.png&#34; alt=&#34;断点&#34; /&gt;&lt;br /&gt;
+通过调用堆栈信息，能够容易地找到请求入口，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725222318.png&#34; alt=&#34;请求入口1&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725222542.png&#34; alt=&#34;请求入口2&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;既然看到是有 request 方法进行的请求，很合理地认为该 request 就是引用 1 中的 electron 中 net 模块的 request，也自然按照文章中方法对 request 进行了 hook 操作，但经过操作后发现并不能拦截到网络请求，想了想觉得可能哪里有不对的地方，于是进入 request 方法看看它到底经过了哪些代码，步入后发现了图中的部分代码，打个断点看看，果然会在这边停住，&lt;br /&gt;
+&lt;img data-src=&#34;https://raw.githubusercontent.com/jylc/BlogImage/main/images/20240725225941.png&#34; alt=&#34;发现&#34; /&gt;&lt;br /&gt;
+后面又继续跟进代码，但总会出现一个问题：跟进到某个地方后，突然就会跳到其它地方并且返回了请求的响应内容，百思不得其解。后来搜了下 dealRequestInterceptors 发现它是 umi-request 库中的&lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn5&#34; id=&#34;fnref5&#34;&gt;[5]&lt;/a&gt;&lt;/sup&gt;，这下麻了，谁会想到是用的其他库中的网络请求。依葫芦画瓢，将原来的 hook 代码中 electron 的 request 换成 umi-request 库中的内容，但还是无法拦截，仔细看到了下官方的使用方式，与代码中的比较了一下可以确认是通过 import 方式进行的导入调用&lt;sup class=&#34;footnote-ref&#34;&gt;&lt;a href=&#34;#fn6&#34; id=&#34;fnref6&#34;&gt;[6]&lt;/a&gt;&lt;/sup&gt;&lt;br /&gt;
+。在 js 中有两种引入模块的方法，import 和 request，import 是静态的，必须在编译时就确定要加载哪些模块，request 是动态的，可以运行时根据需要加载模块，根据我的理解 import 相当于 C 程序中的 #include 起到导入头文件的作用，request 相当于加载 DLL 动态链接库文件，因此 request 形式的导入是可以通过 hook 修改原方法的属性值，而 import 不行。既然不能通过 hook 的方式修改，那没办法只能在解包后的文件中修改了，试了一下还真可以，这样后续的修改就没什么问题了～&lt;/p&gt;
+&lt;h1 id=&#34;打包&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#打包&#34;&gt;#&lt;/a&gt; 打包&lt;/h1&gt;
+&lt;p&gt;运行以下代码&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;asar pack ./app app.asar&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr class=&#34;footnotes-sep&#34; /&gt;
+&lt;section class=&#34;footnotes&#34;&gt;
+&lt;ol class=&#34;footnotes-list&#34;&gt;
+&lt;li id=&#34;fn1&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuNTJwb2ppZS5jbi90aHJlYWQtMTc4NjgxMS0xLTEuaHRtbA==&#34;&gt;Xmind macOS &amp;amp; Windows (23.09.xxxxx) 通杀方案&lt;/span&gt; &lt;a href=&#34;#fnref1&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn2&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNzU5ODAyMjg2MDg4&#34;&gt;Object.defineProperty 的用法详解&lt;/span&gt; &lt;a href=&#34;#fnref2&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn3&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hvWWFfMS9hcnRpY2xlL2RldGFpbHMvMTMxNTMzNzQ5&#34;&gt;Electron 应用调试&lt;/span&gt; &lt;a href=&#34;#fnref3&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn4&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvWE5jVVh6NjQwd0tKcTBwSElHc2hnUQ==&#34;&gt;Electron 的一些调试技巧&lt;/span&gt; &lt;a href=&#34;#fnref4&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn5&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vd3VoYW96aG91L3AvMTQwMzA1NDAuaHRtbA==&#34;&gt;umi-request 中间件和拦截器解析&lt;/span&gt; &lt;a href=&#34;#fnref5&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn6&#34; class=&#34;footnote-item&#34;&gt;&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3VtaWpzL3VtaS1yZXF1ZXN0&#34;&gt;umi-request&lt;/span&gt; &lt;a href=&#34;#fnref6&#34; class=&#34;footnote-backref&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://example.com/2024/07/17/SWPUCTF-2021-%E6%96%B0%E7%94%9F%E8%B5%9B-finalrce/</guid>
             <title>[SWPUCTF 2021 新生赛]finalrce</title>
@@ -75,6 +176,7 @@ include () 方法一般存在漏洞可以利用，此处用 php://filter 协议�
             <guid isPermalink="true">http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/</guid>
             <title>如何在docker中重置mysql的root密码</title>
             <link>http://example.com/2024/05/09/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E9%87%8D%E7%BD%AEmysql%E7%9A%84root%E5%AF%86%E7%A0%81/</link>
+            <category term="Docker" scheme="http://example.com/tags/Docker/" />
             <pubDate>Thu, 09 May 2024 23:45:55 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;遇到的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#遇到的问题&#34;&gt;#&lt;/a&gt; 遇到的问题&lt;/h1&gt;
 &lt;p&gt;长期未使用 mysql 导致忘记了 root 密码，多次尝试始终无法猜出设置的密码（晕），新建数据库又十分麻烦，故选择重置 root 密码。&lt;/p&gt;
